@@ -8,6 +8,8 @@
 	<array>
 		<string>testing</string>
 	</array>
+	<key>category</key>
+	<string>Printers</string>
 	<key>description</key>
 	<string>DESCRIPTION</string>
 	<key>display_name</key>
