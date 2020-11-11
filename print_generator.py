@@ -1,4 +1,8 @@
 #!/usr/bin/python
+
+# Version 1.18
+# Updated 11/9/20
+
 from __future__ import absolute_import, print_function
 
 import argparse
@@ -41,7 +45,7 @@ args = parser.parse_args()
 
 
 pwd = os.path.dirname(os.path.realpath(__file__))
-f = open(os.path.join(pwd, 'AddPrinter-Template.plist'), 'rb')
+f = open(os.path.join(pwd, 'Printer-Template.plist'), 'rb')
 templatePlist = load_plist(f)
 f.close()
 
@@ -62,7 +66,7 @@ if args.csv:
             # First, change the plist keys in the pkginfo itself
             newPlist['display_name'] = row[2]
             newPlist['description'] = row[5]
-            newPlist['name'] = "AddPrinter_" + str(row[0]) # set to printer name
+            newPlist['name'] = "Printer_" + str(row[0]) # set to printer name
             # Check for an icon
             if row[9] != "":
                 newPlist['icon_name'] = row[9]
@@ -108,7 +112,7 @@ if args.csv:
             if row[8] != "":
                 newPlist['requires'] = row[8].split(' ')
             # Write out the file
-            newFileName = "AddPrinter-" + row[0] + "-" + version + ".pkginfo"
+            newFileName = "Printer-" + row[0] + "-" + version + ".pkginfo"
             f = open(newFileName, 'wb')
             dump_plist(newPlist, f)
             f.close()
@@ -185,7 +189,7 @@ else:
    # root pkginfo variable replacement
     newPlist['description'] = description
     newPlist['display_name'] = displayName
-    newPlist['name'] = "AddPrinter_" + displayName.replace(" ", "")
+    newPlist['name'] = "Printer_" + displayName.replace(" ", "")
     newPlist['version'] = version
     newPlist['icon_name'] = icon
     # installcheck_script variable replacement
@@ -208,7 +212,7 @@ else:
     if requires != "":
         newPlist['requires'] = [r.replace('\\', '') for r in re.split(r"(?<!\\)\s", requires)]
 
-    newFileName = "AddPrinter-" + str(args.printername) + "-%s.pkginfo" % str(version)
+    newFileName = "Printer-" + str(args.printername) + "-%s.pkginfo" % str(version)
     f = open(newFileName, 'wb')
     dump_plist(newPlist, f)
     f.close()
