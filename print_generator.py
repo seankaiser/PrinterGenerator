@@ -192,7 +192,6 @@ else:
     newPlist['installcheck_script'] = newPlist['installcheck_script'].replace("ADDRESS", address)
     newPlist['installcheck_script'] = newPlist['installcheck_script'].replace("DISPLAY_NAME", displayName)
     newPlist['installcheck_script'] = newPlist['installcheck_script'].replace("LOCATION", location.replace('"', ''))
-    newPlist['installcheck_script'] = newPlist['installcheck_script'].replace("DRIVER", os.path.splitext(os.path.basename(driver))[0].replace('"', ''))
     newPlist['installcheck_script'] = newPlist['installcheck_script'].replace("OPTIONS", optionsString)
     # postinstall_script variable replacement
     newPlist['postinstall_script'] = templatePlist['postinstall_script'].replace("PRINTERNAME", args.printername)
