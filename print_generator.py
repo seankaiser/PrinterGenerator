@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Version 1.19
+# Version 1.20
 # Updated 12/2/20
 
 from __future__ import absolute_import, print_function
@@ -184,7 +184,7 @@ else:
    # root pkginfo variable replacement
     newPlist['description'] = description
     newPlist['display_name'] = displayName
-    newPlist['name'] = "Printer_" + displayName.replace(" ", "")
+    newPlist['name'] = "Printer_" + args.printername
     newPlist['version'] = version
     newPlist['icon_name'] = icon
     # installcheck_script variable replacement
