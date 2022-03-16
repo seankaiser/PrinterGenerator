@@ -1,6 +1,8 @@
 ### Note: This project was archived by author Nick McSpadden on 8/11/20.
 I plan to make additional commits in this fork and continue using it. Pull requests are welcome.
 
+* [wycomco has another fork](https://github.com/wycomco/PrinterGenerator) that is under active development and is worth checking out.
+
 PrinterGenerator
 ================
 
