@@ -15,7 +15,7 @@
 	<key>display_name</key>
 	<string>DISPLAY_NAME</string>
 	<key>installcheck_script</key>
-	<string>#!/usr/bin/python
+	<string>#!/usr/local/munki/munki-python
 import subprocess
 import sys
 import shlex
@@ -23,7 +23,7 @@ import shlex
 printerOptions = { OPTIONS }
 
 cmd = ['/usr/bin/lpoptions', '-p', 'PRINTERNAME', '-l']
-proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 (lpoptLongOut, lpoptErr) = proc.communicate()
 
 # lpoptions -p printername -l will still exit 0 even if printername does not exist
@@ -53,6 +53,11 @@ for option in lpoptLongOut.splitlines():
                 print("Found mismatch: %s is '%s', should be '%s'" % (myOption, printerOptions[myOption], actualOptionValue))
                 sys.exit(0)
 
+try:
+    lpoptOut = lpoptOut.decode("utf-8")
+except UnicodeDecodeError:
+    sys.exit(0)
+
 optionDict = {}
 for builtOption in shlex.split(lpoptOut):
     try:
@@ -76,7 +81,7 @@ sys.exit(1)</string>
 	<key>name</key>
 	<string>Printer_DISPLAYNAME</string>
 	<key>postinstall_script</key>
-	<string>#!/usr/bin/python
+	<string>#!/usr/local/munki/munki-python
 import subprocess
 import sys
 
@@ -84,7 +89,7 @@ import sys
 printerOptions = { OPTIONS }
 
 cmd = [ '/usr/sbin/lpadmin', '-x', 'PRINTERNAME' ]
-proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 (lpadminxOut, lpadminxErr) = proc.communicate()
 
 # Install the printer
@@ -102,16 +107,16 @@ for option in printerOptions.keys():
     cmd.append("-o")
     cmd.append(str(option) + "=" +  str(printerOptions[option]))
 
-proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 (lpadminOut, lpadminErr) = proc.communicate()
 
 if lpadminErr:
         if "Printer drivers are deprecated" in lpadminErr:
                 # work around lpadmin deprecation message
-                print "Install successful - caught deprecation message; preventing exit 1"
+                print("Install successful - caught deprecation message; preventing exit 1")
                 pass
         else:
-                print "Error: %s" % lpadminErr
+                print("Error: %s" % lpadminErr)
                 sys.exit(1)
 print("Results: %s" % lpadminOut)
 sys.exit(0)</string>
@@ -165,7 +170,7 @@ fi</string>
 	<key>uninstall_method</key>
 	<string>uninstall_script</string>
 	<key>uninstall_script</key>
-	<string>#!/bin/bash
+	<string>#!/bin/sh
 /usr/sbin/lpadmin -x PRINTERNAME</string>
 	<key>uninstallable</key>
 	<true/>
