@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#!/usr/local/munki/munki-python
 
-# Version 1.20
-# Updated 12/2/20
+# Version 1.21
+# Updated 3/17/22
 
 from __future__ import absolute_import, print_function
 
